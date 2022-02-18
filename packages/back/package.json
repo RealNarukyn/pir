@@ -1,0 +1,21 @@
+{
+  "name": "back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "ts-node src/server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "^10.5.0"
+  },
+  "dependencies": {
+    "fastify": "^3.27.1",
+    "fastify-formbody": "^5.2.0",
+    "pino": "^7.8.0",
+    "pino-pretty": "^7.5.1"
+  }
+}
