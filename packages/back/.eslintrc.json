@@ -16,6 +16,7 @@
     ],
     "rules": {
         "no-console": "off",
+        "comma-dangle": "off",
         "object-curly-spacing":"off"
     }
 }

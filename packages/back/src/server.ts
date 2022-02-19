@@ -1,10 +1,20 @@
 import fastify from 'fastify';
 
-const server = fastify({
-  logger: { prettyPrint: true },
-  disableRequestLogging: true,
+import { FastifyApp } from './types/fastify';
+import { config } from './config';
+import { App } from './app';
+
+const server: FastifyApp = fastify({
+  logger: config.APP.logger,
+  pluginTimeout: 10000,
+  disableRequestLogging: true
 });
 
-// server.register(main_app);
+server.register(App);
 
-server.listen(5000, '0.0.0.0');
+server.listen(config.APP.port, (err) => {
+  if (err) {
+    server.log.error(err);
+    process.exit(1);
+  }
+});
