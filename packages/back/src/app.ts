@@ -1,5 +1,6 @@
 import formBodyPlugin from 'fastify-formbody';
 import mongoose from 'mongoose';
+import fastifySwagger from 'fastify-swagger';
 
 import { FastifyApp } from './types/fastify';
 import { config } from './config';
@@ -13,9 +14,12 @@ export const App = async (server: FastifyApp) => {
         throw new Error(err);
       });
 
+  // Swagger Options
+  server.register(fastifySwagger, config.SWAGGER);
+
   // -- Accept Form Bodies
   server.register(formBodyPlugin);
 
   // -- Import all routers
-  server.register(indexRouter);
+  server.register(indexRouter, { prefix: '/api', });
 };

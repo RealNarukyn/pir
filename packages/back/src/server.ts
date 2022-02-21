@@ -12,9 +12,11 @@ const server: FastifyApp = fastify({
 
 server.register(App);
 
-server.listen(config.APP.port, (err) => {
-  if (err) {
-    server.log.error(err);
-    process.exit(1);
-  }
-});
+server.listen(config.APP.port)
+    .then((address) =>
+      server.log.info(`Find API documentacion at: ${address}/api/doc`)
+    )
+    .catch((err) => {
+      server.log.error(err);
+      process.exit(1);
+    });

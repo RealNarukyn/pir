@@ -26,4 +26,18 @@ const DB_URL = checkEnv('DB_URL');
 // #endregion
 const MONGO = { dbURL: DB_URL };
 
-export const config = { APP, MONGO };
+// [ SWAGGER Config ]
+const SWAGGER = {
+  routePrefix: '/api/doc',
+  swagger: {
+    info: {
+      title: 'PIR APP - Swagger',
+      version: '0.1.0'
+    },
+    schemes: ['http'],
+    consumes: ['application/json'],
+    produces: ['application/json'],
+  },
+  exposeRoute: true
+};
+export const config = { APP, MONGO, SWAGGER };
