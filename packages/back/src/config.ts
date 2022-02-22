@@ -34,6 +34,10 @@ const SWAGGER = {
       title: 'PIR APP - Swagger',
       version: '0.1.0'
     },
+    externalDocs: {
+      url: 'https://github.com/fastify/fastify-swagger',
+      description: 'fastify-swagger documentation'
+    },
     schemes: ['http'],
     consumes: ['application/json'],
     produces: ['application/json'],

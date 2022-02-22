@@ -2,9 +2,9 @@
 import { Document, Schema, model } from 'mongoose';
 
 export enum TracksEnum {
-    solo = 'solo',
-    duo = 'duo',
-    badminton = 'badminton',
+    solo = 'padel solo',
+    duo = 'padel duo',
+    padbol = 'padbol',
 }
 
 export interface ITrack extends Document {
