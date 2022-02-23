@@ -34,13 +34,12 @@ export class BookingController {
       trackID, userID, bName, bEmail, initTime, duration
     } = request.body;
 
-
     // [ Validations ]
+    if (!bDate || !trackID || !bName || !bEmail || !initTime || !duration) {
+      return reply.code(500).send({ error: 'Missing element in request' });
+    }
     if (!validDate(bDate)) {
       return reply.code(500).send({ error: 'Invalid bDate' });
-    }
-    if (!trackID || !bName || !bEmail || !initTime || !duration) {
-      return reply.code(500).send({ error: 'Missing element in request body' });
     }
     if (!validEmail(bEmail)) {
       return reply.code(500).send({ error: 'Invalid bEmail' });
