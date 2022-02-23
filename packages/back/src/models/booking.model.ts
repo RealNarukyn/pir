@@ -9,7 +9,7 @@ export interface IBooking extends Document {
     bName: string;
     bEmail: string;
     bDate: string;
-    initTime: string;
+    initTime: number;
     duration: string;
 };
 
@@ -18,9 +18,14 @@ const schema = new Schema<IBooking>({
   userID: { type: String, required: false, },
   bName: { type: String, required: true, },
   bEmail: { type: String, required: true, },
-  bDate: { type: String, required: true, },
-  initTime: { type: String, required: true, },
-  duration: { type: String, required: true, enum: ['60', '90'] }
+  bDate: { type: String, required: true },
+  initTime: {
+    type: Number,
+    required: true,
+    min: [8, 'We\'re closed'],
+    max: [23, 'We\'re closed']
+  },
+  duration: { type: String, required: true, enum: ['60', '90', '120'] }
 });
 
 export const BookingModel = model<IBooking>('Booking', schema);
