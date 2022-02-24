@@ -67,8 +67,8 @@ export const SBooking = {
         userID: { type: 'string' },
         bName: { type: 'string' },
         bEmail: { type: 'string' },
-        initTime: { type: 'number' },
-        duration: { type: 'string' }
+        initTime: { type: 'string' },
+        duration: { type: 'number' }
       }
     },
     response: {

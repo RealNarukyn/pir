@@ -19,6 +19,7 @@ const getTrackType = (trackType: string):string =>
     // -- Create Default Tracks
     await Promise.all(
         DEFAULT_TRACKS.map(async (trackType:string, index: number) => {
+          console.log('Adding padel track to the database...');
           await TrackModel.create({
             trackNum: index+1,
             trackType: getTrackType(trackType)
