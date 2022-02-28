@@ -1,21 +1,25 @@
 import React from 'react';
 import Link from 'next/link';
-import { MyNavLink } from './MyNavLink';
 
+import { MyNavLink } from './MyNavLink';
 import { NavDropDownItem } from './NavDropDownItem';
+import { SessionBtn } from './SessionBtn';
 
 
 export const MyNavbar = () => {
   return (
     <nav
       className="navbar navbar-expand-lg navbar-dark bg-primary p-3"
+      style={{ background: 'rgba(67,78,160,1)!important' }}
     >
       <div className="container-fluid">
+
         <Link href="/">
           <span style={{ cursor: 'pointer' }} className="navbar-brand">
             Padel Indoor Rubi
           </span>
         </Link>
+
         <button className="navbar-toggler" type="button"
           data-bs-toggle="collapse" data-bs-target="#navbarText"
           aria-controls="navbarText" aria-expanded="false"
@@ -76,9 +80,7 @@ export const MyNavbar = () => {
 
           </ul>
 
-          <button>
-            <a className="nav-link" href="/#0">ACCÉS USUARI</a>
-          </button>
+          <SessionBtn />
         </div>
       </div>
     </nav>
