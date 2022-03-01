@@ -1,11 +1,11 @@
 /* eslint-disable max-len */
 import { Schema, model, Document } from 'mongoose';
 
-import { TracksEnum } from '../tracks/track.model';
+import { ITrack } from '../tracks/track.model';
 import { SkillEnum } from '../users/user.model';
 
 export interface IGame extends Document {
-    gameType: string;
+    trackID: ITrack['_id'];
     host: string;
     players: string[];
     date: string;
@@ -16,7 +16,7 @@ export interface IGame extends Document {
 }
 
 const schema = new Schema<IGame>({
-  gameType: { type: String, required: true, enum: TracksEnum },
+  trackID: { type: Schema.Types.ObjectId, required: true },
   host: { type: String, required: true },
   players: { type: [String], required: true, },
   date: { type: String, required: true, },

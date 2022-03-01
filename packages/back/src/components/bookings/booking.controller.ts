@@ -3,7 +3,9 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { BookingModel, IBooking } from './booking.model';
 import { ITrack } from '../tracks/track.model';
 import { splitTime, sumTime } from '../../utils/utils';
-import { validDate, validEmail, validTime } from '../../utils/validators';
+import {
+  validDate, validDuration, validEmail, isFreeToBook, validTime
+} from '../../utils/validators';
 
 type MainRequest = FastifyRequest<{ Params: { bDate: string } }>
 type BookingRequest = FastifyRequest<{
@@ -19,8 +21,8 @@ type BookingRequest = FastifyRequest<{
 }>
 
 export class BookingController {
-  static main = async (request: MainRequest, reply: FastifyReply) => {
-    const { bDate } = request.params;
+  static main = async (req: MainRequest, reply: FastifyReply) => {
+    const { bDate } = req.params;
     const pDate = bDate.trim().replace(/ /g, '');
 
     if (!validDate(pDate)) {
@@ -30,68 +32,47 @@ export class BookingController {
     return await BookingModel.find({ bDate: pDate }).lean();
   };
 
-  static booking = async (request: BookingRequest, reply: FastifyReply) => {
-    const { bDate } = request.params;
+  static booking = async (req: BookingRequest, reply: FastifyReply) => {
+    const { bDate } = req.params;
     const {
       trackID, userID, bName, bEmail, initTime, duration
-    } = request.body;
+    } = req.body;
 
-    // #region [ Validations ]
-    if (!bDate || !trackID || !bName || !bEmail || !initTime || !duration) {
-      return reply.code(500).send({ error: 'Missing element in request' });
-    }
-    if (!validDate(bDate)) {
-      return reply.code(500).send({ error: 'Invalid booking Date' });
-    }
-    if (!validEmail(bEmail)) {
-      return reply.code(500).send({ error: 'Invalid booking Email' });
-    }
-    if (!validTime(initTime, duration)) {
-      return reply.code(500).send({ error: 'Invalid booking Start Time' });
-    }
-    const endTime = sumTime(initTime, duration);
+    try {
+      // #region [ Validations ]
+      if (!bDate || !trackID || !bName || !bEmail || !initTime || !duration) {
+        throw new Error('Missing element in request');
+      }
+      if (!validEmail(bEmail)) {
+        throw new Error('Invalid [ BOOKING EMAIL ]');
+      }
+      if (!validDuration(duration)) {
+        throw new Error('Invalid [ DURATION ]');
+      }
+      if (!validDate(bDate)) {
+        throw new Error('Invalid [ BOOKING DATE ]');
+      }
+      if (!validTime(bDate, initTime, duration)) {
+        throw new Error('Invalid [ BOOKING START TIME ]');
+      }
 
-    // [ Get all the bookings for that track for that day ]
-    const bookings: IBooking[] = await BookingModel.find({ bDate, trackID });
-    // [ Get all the bookings beyond the current hour ]
-    const bTime = splitTime(initTime);
-    const beyondBookings = bookings.filter((booking) =>
-      splitTime(booking.initTime)[0] >= bTime[0]
-    );
-
-    // [ Check that there're options to book ]
-    let validBook = true;
-    beyondBookings.forEach((booking) => {
-      const alreadyBookedTime: Array<number> = splitTime(booking.initTime);
-      const alreadyBookedEndTime: Array<number> = splitTime(
-          sumTime(booking.initTime, booking.duration)
+      // [ Get all the bookings for that track for that day ]
+      const bookings: IBooking[] = await BookingModel.find({ bDate, trackID });
+      // [ Get all the bookings beyond the current hour ]
+      const bTime = splitTime(initTime);
+      const beyondBookings = bookings.filter((booking) =>
+        splitTime(booking.initTime)[0] >= bTime[0]
       );
 
-      // Same booking tame === [ ERROR ]
-      if (booking.initTime === initTime) validBook = false;
-
-      // Booking between an already booked === [ ERROR ]
-      // [ Case 21:00 ]
-      if (bTime[0] >= alreadyBookedTime[0] &&
-        bTime[0] < alreadyBookedEndTime[0]) {
-        validBook = false;
+      if (!isFreeToBook(initTime, beyondBookings)) {
+        return reply.code(500).send({
+          error: 'There\s already a book for that time'
+        });
       }
-      // [ Case 21:30 ]
-      if (bTime[0] >= alreadyBookedTime[0] &&
-        (bTime[0] === alreadyBookedEndTime[0] &&
-          bTime[1] > alreadyBookedEndTime[1]) ) {
-        validBook = false;
-      }
-    });
-    if (!validBook) {
-      return reply.code(500).send({
-        error: 'There\s already a book for that time'
-      });
-    }
-    // #endregion
+      // #endregion
 
-    // [ Create Booking ]
-    try {
+      // [ Create Booking ]
+      const endTime = sumTime(initTime, duration);
       return await BookingModel.create({
         trackID,
         userID: userID || '',

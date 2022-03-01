@@ -3,8 +3,8 @@ import { UserModel } from './user.model';
 
 type MainRequest = FastifyRequest<{ Params: { authID: string } }>
 export class UserController {
-  static main = async (request: MainRequest, reply: FastifyReply) => {
-    const { authID } = request.params;
+  static main = async (req: MainRequest, reply: FastifyReply) => {
+    const { authID } = req.params;
     const pID = authID.trim().replace(/ /g, '');
     if (!pID) {
       return reply.code(500).send({ error: 'Invalid authID' });
