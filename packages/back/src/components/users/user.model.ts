@@ -5,6 +5,7 @@ export enum SkillEnum {
     noobie = 'noobie',
     amateur = 'amateur',
     pro = 'professional',
+    any = 'any'
 }
 
 export interface IUser extends Document {
@@ -15,6 +16,6 @@ export interface IUser extends Document {
 const schema = new Schema<IUser>({
   authID: { type: String, required: true, trim: true },
   skillLevel: { type: String, required: false, enum: SkillEnum, trim: true }
-});
+}, { _id: false, versionKey: false });
 
 export const UserModel = model<IUser>('User', schema);

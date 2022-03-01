@@ -1,5 +1,26 @@
 const TAG_NAME = 'Bookings';
 
+const bookingSchemaRequest = {
+  trackID: { type: 'string' },
+  userID: { type: 'string' },
+  bName: { type: 'string' },
+  bEmail: { type: 'string' },
+  initTime: { type: 'string' },
+  duration: { type: 'number' }
+};
+
+const bookingSchemaResponse = {
+  _id: { type: 'string' },
+  trackID: { type: 'string' },
+  userID: { type: 'string' },
+  bName: { type: 'string' },
+  bEmail: { type: 'string' },
+  bDate: { type: 'string' },
+  initTime: { type: 'string' },
+  endTime: { type: 'string' },
+  duration: { type: 'number' },
+};
+
 export const SMain = {
   schema: {
     description:
@@ -29,15 +50,7 @@ export const SMain = {
         type: 'array',
         items: {
           type: 'object',
-          properties: {
-            trackID: { type: 'string' },
-            userID: { type: 'string' },
-            bName: { type: 'string' },
-            bEmail: { type: 'string' },
-            bDate: { type: 'string' },
-            initTime: { type: 'string' },
-            duration: { type: 'string' },
-          }
+          properties: bookingSchemaResponse
         }
       }
     }
@@ -62,14 +75,7 @@ export const SBooking = {
       description:
         'Everyfield is mandatory EXCEPT userID, in case there\'s '+
         'no user logged you can\'t send an userID',
-      properties: {
-        trackID: { type: 'string' },
-        userID: { type: 'string' },
-        bName: { type: 'string' },
-        bEmail: { type: 'string' },
-        initTime: { type: 'string' },
-        duration: { type: 'number' }
-      }
+      properties: bookingSchemaRequest
     },
     response: {
       '500': {
@@ -83,15 +89,7 @@ export const SBooking = {
       '200': {
         description: 'It will return the created book',
         type: 'object',
-        properties: {
-          trackID: { type: 'string' },
-          userID: { type: 'string' },
-          bName: { type: 'string' },
-          bEmail: { type: 'string' },
-          bDate: { type: 'string' },
-          initTime: { type: 'number' },
-          duration: { type: 'string' },
-        }
+        properties: bookingSchemaResponse
       }
     }
   }

@@ -1,5 +1,11 @@
 const TAG_NAME = 'Tracks';
 
+const tracksSchemaResponse = {
+  '_id': { type: 'string' },
+  'trackNum': { type: 'number' },
+  'trackType': { type: 'string' }
+};
+
 export const SMain = {
   schema: {
     description:
@@ -12,12 +18,7 @@ export const SMain = {
         type: 'array',
         items: {
           type: 'object',
-          properties: {
-            '_id': { type: 'string' },
-            'trackNum': { type: 'number' },
-            'trackType': { type: 'string' },
-            '__v': { type: 'number' }
-          }
+          properties: tracksSchemaResponse
         }
       }
     }

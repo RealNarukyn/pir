@@ -1,5 +1,10 @@
 const TAG_NAME = 'Users';
 
+const userSchemaResponse = {
+  authID: { type: 'string' },
+  skillLevel: { type: 'string' },
+};
+
 export const SMain = {
   schema: {
     description: 'GET Call to recieve an information of a specific user',
@@ -30,10 +35,7 @@ export const SMain = {
       },
       '200': {
         type: 'object',
-        properties: {
-          authID: { type: 'string' },
-          skillLevel: { type: 'string' },
-        }
+        properties: userSchemaResponse
       }
     }
   }

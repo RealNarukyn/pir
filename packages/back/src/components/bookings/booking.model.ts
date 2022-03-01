@@ -23,6 +23,6 @@ const schema = new Schema<IBooking>({
   initTime: { type: String, required: true, },
   endTime: { type: String, required: true, },
   duration: { type: Number, required: true, enum: [60, 90, 120] }
-});
+}, { versionKey: false });
 
 export const BookingModel = model<IBooking>('Booking', schema);
