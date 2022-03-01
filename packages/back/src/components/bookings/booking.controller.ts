@@ -1,8 +1,9 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { BookingModel, IBooking } from '../models/booking.model';
-import { ITrack } from '../models/track.model';
-import { splitTime, sumTime } from '../utils/utils';
-import { validDate, validEmail, validTime } from '../utils/validators';
+
+import { BookingModel, IBooking } from './booking.model';
+import { ITrack } from '../tracks/track.model';
+import { splitTime, sumTime } from '../../utils/utils';
+import { validDate, validEmail, validTime } from '../../utils/validators';
 
 type MainRequest = FastifyRequest<{ Params: { bDate: string } }>
 type BookingRequest = FastifyRequest<{

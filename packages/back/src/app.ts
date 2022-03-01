@@ -3,8 +3,8 @@ import fastifySwagger from 'fastify-swagger';
 
 import { FastifyApp } from './types/fastify';
 import { config } from './config';
-import { indexRouter } from './routes/index.router';
-import { DatabaseController } from './controllers/database.controller';
+import { router } from './components/index.router';
+import { DatabaseController } from './utils/database.utils';
 
 export const App = async (server: FastifyApp) => {
   // -- Connect to the Database
@@ -17,5 +17,5 @@ export const App = async (server: FastifyApp) => {
   server.register(fastifySwagger, config.SWAGGER);
 
   // -- Import all routers
-  server.register(indexRouter, { prefix: '/api', });
+  server.register(router, { prefix: '/api', });
 };

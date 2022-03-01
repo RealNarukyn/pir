@@ -1,8 +1,8 @@
 import { FastifyPluginAsync } from 'fastify';
 
-import { FastifyApp } from '../types/fastify';
-import { BookingController } from '../controllers/booking.controller';
-import { SMain, SBooking } from '../swagger-schemas/booking.swagger';
+import { FastifyApp } from '../../types/fastify';
+import { BookingController } from './booking.controller';
+import { SMain, SBooking } from './booking.swagger';
 
 export const bookingsRouter: FastifyPluginAsync =
     async (server: FastifyApp) => {

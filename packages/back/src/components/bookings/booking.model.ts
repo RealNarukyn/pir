@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { Document, Schema, model } from 'mongoose';
 
-import { ITrack } from './track.model';
+import { ITrack } from '../tracks/track.model';
 
 export interface IBooking extends Document {
     trackID: ITrack['_id'];

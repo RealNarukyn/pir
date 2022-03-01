@@ -25,7 +25,7 @@ export const SMain = {
       },
       '200': {
         description:
-        'In case there are no bookings availables the array will be empty',
+        'In case there are no bookings the array will be empty',
         type: 'array',
         items: {
           type: 'object',
