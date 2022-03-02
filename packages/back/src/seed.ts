@@ -1,5 +1,6 @@
 import { DatabaseController } from './utils/database.utils';
-import { TrackModel, TracksEnum } from './components/tracks/track.model';
+import { TrackModel } from './components/tracks/track.model';
+import { TracksEnum } from './types/enums';
 
 const DEFAULT_TRACKS = [
   'duo', 'duo', 'duo', 'duo', 'duo', 'duo',

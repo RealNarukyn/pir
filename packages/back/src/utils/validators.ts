@@ -1,4 +1,4 @@
-import { dateRegex, emailRegex } from './regex';
+import { timeRegex, dateRegex, emailRegex } from './regex';
 import { addDays, getToday, splitTime, sumTime } from './utils';
 import { IBooking } from '../components/bookings/booking.model';
 
@@ -24,6 +24,8 @@ export const validDate = (date: string):boolean => {
 export const validTime = (
     bDate: string, strTime: string, duration:number
 ):boolean => {
+  if (!timeRegex.test(strTime)) return false;
+
   const time = splitTime(strTime);
 
   // [ We're closed ! ]
@@ -54,38 +56,35 @@ export const validDuration = (duration: number): boolean =>
 
 export const validEmail = (email: string):boolean => emailRegex.test(email);
 
+export interface BookTimeInfo {
+  bDate: string;
+  initTime: string;
+  endTime: string;
+}
 export const isFreeToBook = (
-    initTime: string, beyondBookings: IBooking[]
+    newBook:BookTimeInfo, bookings: IBooking[]
 ):boolean => {
-  console.log('initTime', initTime);
-  console.log('beyondBookings', beyondBookings);
-
   let validBook = true;
 
-  const bTime = splitTime(initTime);
-  console.log('bTime', bTime);
+  const bookTs = new Date(`${newBook.bDate}/${newBook.initTime}`).getTime();
+  const bookEndTs = new Date(`${newBook.bDate}/${newBook.endTime}`).getTime();
 
-  beyondBookings.forEach((booking) => {
-    const alreadyBookedTime: Array<number> = splitTime(booking.initTime);
-    const alreadyBookedEndTime: Array<number> = splitTime(
-        sumTime(booking.initTime, booking.duration)
-    );
+  bookings.forEach((book) => {
+    const alreadyBookTs = new Date(`${book.bDate}/${book.initTime}`).getTime();
+    const alreadyBookEndTs = new Date(`${book.bDate}/${book.endTime}`)
+        .getTime();
 
-    // Same booking time === [ ERROR ]
-    if (booking.initTime === initTime) validBook = false;
+    // Check it's not the same Init Time
+    if (bookTs === alreadyBookTs) validBook = false;
 
-    // Booking between an already booked time === [ ERROR ]
-    // [ Case 21:00 ]
-    if (bTime[0] >= alreadyBookedTime[0] &&
-      bTime[0] < alreadyBookedEndTime[0]) {
-      validBook = false;
-    }
-    // [ Case 21:30 ]
-    if (bTime[0] >= alreadyBookedTime[0] &&
-      (bTime[0] === alreadyBookedEndTime[0] &&
-        bTime[1] > alreadyBookedEndTime[1]) ) {
-      validBook = false;
-    }
+    // Check the init time it's not between a set booking
+    if (bookTs >= alreadyBookTs && bookTs < alreadyBookEndTs) validBook = false;
+
+    // Check the end time of the new book is not overlaping an old booking
+    if (
+      bookEndTs > alreadyBookTs &&
+      bookEndTs < alreadyBookEndTs
+    ) validBook = false;
   });
 
   return validBook;

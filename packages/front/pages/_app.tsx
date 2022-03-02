@@ -37,15 +37,15 @@ const App = ({ Component, pageProps, initialUser }) => {
   );
 };
 
-App.getInitialProps = async ({ ctx }) => {
-  const session = getSession(ctx.req, ctx.res);
+// App.getInitialProps = async ({ ctx }) => {
+//   const session = getSession(ctx.req, ctx.res);
 
-  console.log('initial USER from initial props');
-  console.log(session);
+//   console.log('initial USER from initial props');
+//   console.log(session);
 
-  return {
-    initialUser: session?.user,
-  };
-};
+//   return {
+//     initialUser: session?.user,
+//   };
+// };
 
 export default App;

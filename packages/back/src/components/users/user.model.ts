@@ -1,12 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Document, Schema, model } from 'mongoose';
-
-export enum SkillEnum {
-    noobie = 'noobie',
-    amateur = 'amateur',
-    pro = 'professional',
-    any = 'any'
-}
+import { SkillEnum } from '../../types/enums';
 
 export interface IUser extends Document {
     authID: string;
@@ -15,7 +9,9 @@ export interface IUser extends Document {
 
 const schema = new Schema<IUser>({
   authID: { type: String, required: true, trim: true },
-  skillLevel: { type: String, required: false, enum: SkillEnum, trim: true }
+  skillLevel: {
+    type: String, required: false, enum: SkillEnum, trim: true
+  }
 }, { _id: false, versionKey: false });
 
 export const UserModel = model<IUser>('User', schema);

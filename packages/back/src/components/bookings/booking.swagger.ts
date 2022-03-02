@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const TAG_NAME = 'Bookings';
 
 const bookingSchemaRequest = {
@@ -6,7 +7,11 @@ const bookingSchemaRequest = {
   bName: { type: 'string' },
   bEmail: { type: 'string' },
   initTime: { type: 'string' },
-  duration: { type: 'number' }
+  duration: { type: 'number' },
+  openGame: { type: 'boolean' },
+  host: { type: 'string' },
+  minSkill: { type: 'string' },
+  maxSkill: { type: 'string' }
 };
 
 const bookingSchemaResponse = {
@@ -19,6 +24,12 @@ const bookingSchemaResponse = {
   initTime: { type: 'string' },
   endTime: { type: 'string' },
   duration: { type: 'number' },
+  openGame: { type: 'boolean' },
+  host: { type: 'string' },
+  players: { type: 'array', items: { type: 'string' } },
+  stillJoinable: { type: 'boolean' },
+  minSkill: { type: 'string' },
+  maxSkill: { type: 'string' }
 };
 
 export const SMain = {
@@ -45,8 +56,12 @@ export const SMain = {
         }
       },
       '200': {
-        description:
-        'In case there are no bookings the array will be empty',
+        description: `In case there are no bookings the array will be empty. In case it's a **CLOSED** Game the properties: 
+        - host
+        - players
+        - minSkill
+        - maxSkill
+        will be null or invalid`,
         type: 'array',
         items: {
           type: 'object',
@@ -59,7 +74,15 @@ export const SMain = {
 
 export const SBooking = {
   schema: {
-    description: 'POST Call to create a new book for a track',
+    description: `POST Call to create a new book for a track.
+    The *userID* property it's not mandatary unless you try to book an open game.
+    In case it's a **CLOSED** Game the properties:
+    - openGame
+    - host
+    - minSkill
+    - maxSkill
+    Won't be necessary to be fullfilled.
+    `,
     tags: [TAG_NAME],
     params: {
       type: 'object',
@@ -87,7 +110,12 @@ export const SBooking = {
         }
       },
       '200': {
-        description: 'It will return the created book',
+        description: `It'll return the created game. In case it's a **CLOSED** Game the properties: 
+        - host
+        - players
+        - minSkill
+        - maxSkill
+        will be null or invalid`,
         type: 'object',
         properties: bookingSchemaResponse
       }
