@@ -14,7 +14,7 @@ export interface IBooking extends Document {
     duration: number;
     openGame: boolean;
     host?: string;
-    players?: string[];
+    players: string[];
     stillJoinable?: boolean;
     minSkill?: string;
     maxSkill?: string;
@@ -31,7 +31,7 @@ const schema = new Schema<IBooking>({
   duration: { type: Number, required: true, enum: [60, 90, 120] },
   openGame: { type: Boolean, required: true, default: false },
   host: { type: String, required: false },
-  players: { type: [String], required: false },
+  players: { type: [String], required: true, default: [] },
   stillJoinable: { type: Boolean, required: false, default: true },
   minSkill: {
     type: String, required: false, enum: SkillEnum, default: SkillEnum.any

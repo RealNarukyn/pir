@@ -17,3 +17,7 @@ export type BookingRequest = FastifyRequest<{
   },
   Params: { bDate: string }
 }>
+
+export type JoinGameRequest = FastifyRequest<{
+  Body: { bookID: string; userID: string; }
+}>
