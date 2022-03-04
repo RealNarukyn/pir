@@ -31,7 +31,7 @@ export const MyNavbar = () => {
 
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <MyNavLink active href="/#1" title="Inici" />
+              <MyNavLink active href="/" title="Inici" />
             </li>
             <li className="nav-item">
               <MyNavLink href="/#2" title="Noticies" />
@@ -40,7 +40,7 @@ export const MyNavbar = () => {
               <MyNavLink href="/#3" title="Campionats" />
             </li>
             <li className="nav-item">
-              <MyNavLink href="/#4" title="Reserves" />
+              <MyNavLink href="/bookings" title="Reserves" />
             </li>
 
             <li className="nav-item dropdown">

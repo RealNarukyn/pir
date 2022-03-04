@@ -1,6 +1,7 @@
 import { timeRegex, dateRegex, emailRegex } from './regex';
 import { addDays, getToday, splitTime, sumTime } from './utils';
 import { IBooking } from '../components/bookings/booking.model';
+import { FastifyRequest } from 'fastify';
 
 export const checkEnv = (envVar:string):string => {
   if (process.env[envVar]) return process.env[envVar] as string;
@@ -61,6 +62,7 @@ export interface BookTimeInfo {
   initTime: string;
   endTime: string;
 }
+
 export const isFreeToBook = (
     newBook:BookTimeInfo, bookings: IBooking[]
 ):boolean => {
@@ -88,4 +90,15 @@ export const isFreeToBook = (
   });
 
   return validBook;
+};
+
+export const hasUser = async (
+    req:FastifyRequest
+): Promise<null | { sub:string }> => {
+  try {
+    const user = await req.jwtVerify<{ sub: string }>();
+    return user;
+  } catch (error) {
+    return null;
+  }
 };

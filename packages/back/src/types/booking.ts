@@ -19,5 +19,5 @@ export type BookingRequest = FastifyRequest<{
 }>
 
 export type JoinGameRequest = FastifyRequest<{
-  Body: { bookID: string; userID: string; }
+  Params: { bookID: string; }
 }>

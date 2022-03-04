@@ -7,6 +7,14 @@ import { usersRouter } from './users/user.router';
 import { newsRouter } from './news/news.router';
 
 export const router: FastifyPluginAsync = async (server: FastifyApp) => {
+  // Verify from AUTH0 with BFF ( Backend From Frontend )
+  server.get('/verify', {
+    handler(request, reply) {
+      reply.send(request.user);
+    },
+    preValidation: server.authenticate,
+  });
+
   server.register(usersRouter, {prefix: '/users'});
   server.register(tracksRouter, {prefix: '/tracks'});
   server.register(bookingsRouter, {prefix: '/bookings'});

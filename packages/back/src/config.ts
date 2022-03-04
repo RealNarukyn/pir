@@ -44,4 +44,11 @@ const SWAGGER = {
   },
   exposeRoute: true
 };
-export const config = { APP, MONGO, SWAGGER };
+
+// [ Auth 0 ]
+const AUTH0 = {
+  domain: checkEnv('AUTH0_DOMAIN'),
+  audience: checkEnv('AUTH0_AUDIENCE'),
+  scope: checkEnv('AUTH0_SCOPE')
+};
+export const config = { APP, MONGO, SWAGGER, AUTH0 };

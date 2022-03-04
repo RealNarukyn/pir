@@ -3,7 +3,8 @@ import { FastifyReply } from 'fastify';
 import { BookingModel, IBooking } from './booking.model';
 import { sumTime } from '../../utils/utils';
 import {
-  validDate, validDuration, validEmail, isFreeToBook, validTime, BookTimeInfo
+  validDate, validDuration, validEmail,
+  isFreeToBook, validTime, BookTimeInfo, hasUser
 } from '../../utils/validators';
 import {
   BookingRequest, MainRequest, JoinGameRequest } from '../../types/booking';
@@ -140,11 +141,13 @@ export class BookingController {
   };
 
   static joinGame = async (req: JoinGameRequest, reply: FastifyReply) => {
-    const { bookID, userID } = req.body;
+    // Has a user???
+    const user = await hasUser(req);
+    if (!user) return reply.code(401).send({ error: 'NO USER TOKEN' });
 
     try {
+      const { bookID } = req.params;
       if (!bookID) throw new Error('Not receiving [ bookID ]');
-      if (!userID) throw new Error('Not receiving [ userID ]');
 
       const booking:IBooking = await BookingModel.findById(bookID).lean();
       if (!booking) {
@@ -156,6 +159,9 @@ export class BookingController {
       if (!booking.stillJoinable) {
         throw new Error('The game isn\'t joinable anymore');
       }
+
+      // @TODO: CHECKEAR QUE UN USUARIO CON LVL NOOB
+      // NO SE PUEDA UNIR A UN GAME DE LVL AMATEUR O PRO
 
       // @TODO: CHECKEAR EL NUMERO MAXIMO DE PLAYERS POR BOOKING
       // SI ES PADEL SOLO: NUM PLAYERS MAX = 2
@@ -170,7 +176,7 @@ export class BookingController {
       if (numPlayers < 3) {
         return await BookingModel.findOneAndUpdate(
             { _id: bookID },
-            { players: [...booking.players, userID] },
+            { players: [...booking.players, user.sub] },
             { new: true }
         );
       }
@@ -180,7 +186,7 @@ export class BookingController {
         return await BookingModel.findOneAndUpdate(
             { _id: bookID },
             {
-              players: [...booking.players, userID],
+              players: [...booking.players, user.sub],
               stillJoinable: false,
             },
             { new: true }

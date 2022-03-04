@@ -162,11 +162,10 @@ export const SJoinGame = {
   schema: {
     description: `PUT Call to add a new player to the open game booking`,
     tags: [TAG_NAME],
-    body: {
+    params: {
       type: 'object',
       properties: {
         bookID: { type: 'string', description: '_id of the open game you want to join' },
-        userID: { type: 'string', description: 'auth_id of the player who joins the game. *(In this usecase: you )*'}
       }
     },
     response: {

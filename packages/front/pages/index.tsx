@@ -2,7 +2,7 @@ import React from 'react';
 
 const Index = () => {
   return (
-    <button>Index Page BTN</button>
+    <h1>Index</h1>
   );
 };
 
