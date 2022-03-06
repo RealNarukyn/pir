@@ -7,6 +7,7 @@ export default withApiAuthRequired(async (req, res) => {
   const { accessToken } = await getAccessToken(req, res);
   console.log('accessToken', accessToken);
   console.log('client', apiClient.defaults.baseURL);
+  console.log('request is:', req.body);
 
   const resAPI = await apiClient.get('/tracks', {
     headers: {

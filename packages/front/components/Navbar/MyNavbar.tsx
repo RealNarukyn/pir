@@ -1,23 +1,32 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { MyNavLink } from './MyNavLink';
 import { NavDropDownItem } from './NavDropDownItem';
 import { SessionBtn } from './SessionBtn';
 
+import logo from '../../public/img/pir-logo.jpg';
 
 export const MyNavbar = () => {
   return (
     <nav
-      className="navbar navbar-expand-lg navbar-dark bg-primary p-3"
-      style={{ background: 'rgba(67,78,160,1)!important' }}
+      className="navbar navbar-expand-lg navbar-dark p-3"
+      style={{ background: 'rgb(65,76,203)' }}
     >
       <div className="container-fluid">
 
         <Link href="/">
-          <span style={{ cursor: 'pointer' }} className="navbar-brand">
+          <a>
+            <Image
+              src={logo}
+              alt="padel-indoor-rubi-logo"
+              width={255} height={90}
+            />
+          </a>
+          {/* <span style={{ cursor: 'pointer' }} className="navbar-brand">
             Padel Indoor Rubi
-          </span>
+          </span> */}
         </Link>
 
         <button className="navbar-toggler" type="button"

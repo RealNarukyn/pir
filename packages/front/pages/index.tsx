@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { getTracks } from '../lib/fetcher';
+import { getTracks, testPost } from '../lib/fetcher';
 
 const Index = () => {
   useEffect(() => {
     getTracks();
+    testPost();
   });
 
   return (

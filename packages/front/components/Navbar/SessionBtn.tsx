@@ -10,10 +10,10 @@ border-radius: 1999px;
 `;
 
 const StyledAnchor = styled.a`
-color: rgb(219,219,1);
+color: #e1dddd;
 text-decoration: none;
 &:hover {
-  color: rgb(255,255,1);
+  color: #ffffff;
 }
 `;
 

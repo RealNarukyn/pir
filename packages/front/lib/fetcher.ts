@@ -12,3 +12,11 @@ export const getTracks = async () => {
 
   return res.data;
 };
+
+export const testPost = async () => {
+  const data = {
+    name: 'jason'
+  };
+  const res = await frontClient.post('/api/postFetcher', data);
+  console.log('post res:', res);
+};

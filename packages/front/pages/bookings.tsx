@@ -2,6 +2,8 @@ import React from 'react';
 import _ from 'lodash';
 import styled from 'styled-components';
 
+import { GridHour } from '../components/Bookings/GridHour';
+
 const BookingsGrid = styled.div`
     padding: 1em;
     margin: 1em;
@@ -57,9 +59,7 @@ const Bookings = () => {
                 </GridBox>;
               }
               if (e===0 && f!==0) {
-                return <GridBox key={e+f} theme={{ bg: 'yellow' }}>
-                  {initCount + f/2}
-                </GridBox>;
+                return <GridHour key={e+f} hour={initCount + f/2}/>;
               }
               if (e!==0 && f!==0) {
                 return <GridBox key={e+f} >hour</GridBox>;
