@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -6,7 +7,7 @@ import { MyNavLink } from './MyNavLink';
 import { NavDropDownItem } from './NavDropDownItem';
 import { SessionBtn } from './SessionBtn';
 
-import logo from '../../public/img/pir-logo.jpg';
+import logo from '../../public/img/pir-logo.png';
 
 export const MyNavbar = () => {
   return (
@@ -17,16 +18,11 @@ export const MyNavbar = () => {
       <div className="container-fluid">
 
         <Link href="/">
-          <a>
-            <Image
-              src={logo}
-              alt="padel-indoor-rubi-logo"
-              width={255} height={90}
-            />
-          </a>
-          {/* <span style={{ cursor: 'pointer' }} className="navbar-brand">
-            Padel Indoor Rubi
-          </span> */}
+          <Image
+            src={logo}
+            alt="padel-indoor-rubi-logo"
+            width={255} height={90}
+          />
         </Link>
 
         <button className="navbar-toggler" type="button"
@@ -38,15 +34,15 @@ export const MyNavbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarText">
 
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <MyNavLink active href="/" title="Inici" />
-            </li>
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
             <li className="nav-item">
               <MyNavLink href="/#2" title="Noticies" />
             </li>
             <li className="nav-item">
               <MyNavLink href="/#3" title="Campionats" />
+            </li>
+            <li className="nav-item">
+              <MyNavLink active href="/" title="Inici" />
             </li>
             <li className="nav-item">
               <MyNavLink href="/bookings" title="Reserves" />

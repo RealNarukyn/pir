@@ -1,33 +1,27 @@
 import React from 'react';
 import Head from 'next/head';
 import Script from 'next/script';
-import styled from 'styled-components';
-import { UserProvider, getSession } from '@auth0/nextjs-auth0';
+import { UserProvider } from '@auth0/nextjs-auth0';
 
+// Importing CSS
+import '../public/css/style.css';
+import '../public/css/Carousel.css';
 import '../public/css/MyNavbar.css';
-import { MyNavbar } from '../components/Navbar/MyNavbar';
 
-const FlexAPP = styled.div`
-  width: 100vw;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-`;
+import { MyNavbar } from '../components/Navbar/MyNavbar';
 
 const App = ({ Component, pageProps, initialUser }) => {
   return (
     <>
       <Head>
-        <title>Padel Indoor Rubi</title>
+        <title>Padel Indoor Rubí</title>
       </Head>
 
       {/* MY APP */}
       <UserProvider user={initialUser}>
         <MyNavbar />
 
-        <FlexAPP>
-          <Component {...pageProps} />
-        </FlexAPP>
+        <Component {...pageProps} />
       </UserProvider>
 
 
@@ -36,16 +30,5 @@ const App = ({ Component, pageProps, initialUser }) => {
     </>
   );
 };
-
-// App.getInitialProps = async ({ ctx }) => {
-//   const session = getSession(ctx.req, ctx.res);
-
-//   console.log('initial USER from initial props');
-//   console.log(session);
-
-//   return {
-//     initialUser: session?.user,
-//   };
-// };
 
 export default App;

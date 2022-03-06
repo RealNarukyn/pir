@@ -1,0 +1,29 @@
+.carousel {
+    height: 65vh;
+}
+
+.carousel-bg {
+    width: 100vw;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.reserva-bg {
+    background-image: url('../img/bg-blue.jpg');
+}
+
+.open-games-bg {
+    background-image: url('../img/bg-red.webp');
+}
+
+.campionats-bg {
+    background-image: url('../img/bg-playing.jpg');
+}
