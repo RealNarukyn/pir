@@ -6,7 +6,7 @@ import { ReactChild } from '../../types/ReactChildren';
 const ButtonPrev = styled.button`
   position: relative;
   top: -23.5em;
-  left: 15%;
+  left: 5%;
 
   padding: 1em 2em;;
   background: #e4ff00;
@@ -16,7 +16,7 @@ const ButtonPrev = styled.button`
 const ButtonNext = styled.button`
   position: relative;
   top: -23.5em;
-  left: 75%;
+  left: 85%;
   
   padding: 1em 2em;;
   background: #e4ff00;

@@ -1,6 +1,9 @@
+/* eslint-disable max-len */
 import Link from 'next/link';
 import React from 'react';
 import styled from 'styled-components';
+
+import { CarouselItemProps } from '../../types/Props';
 
 const StyledContainer = styled.div`
     padding: 2em;
@@ -38,15 +41,14 @@ const StyledText = styled.span`
         border: 1px solid #ffff;
     }
 `;
-
-export const OpenGames = () => {
+export const CarouselItem:React.FC<{ itemProps:CarouselItemProps }> = ({ itemProps }) => {
   return (
-    <div className='carousel-bg open-games-bg'>
+    <div className={`carousel-bg ${itemProps.bgImage}`}>
       <StyledContainer>
-        <StyledH2>Partides Obertes</StyledH2>
-        <StyledH5>Uneix-te a partides creades per la gent!</StyledH5>
-        <Link href="/bookings">
-          <StyledText><b>JUGA!</b></StyledText>
+        <StyledH2>{itemProps.title}</StyledH2>
+        <StyledH5>{itemProps.subTitle}</StyledH5>
+        <Link href={'/'+itemProps.href}>
+          <StyledText><b>{itemProps.btnTxt}</b></StyledText>
         </Link>
       </StyledContainer>
     </div>
