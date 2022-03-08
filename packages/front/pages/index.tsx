@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-
 import { Carousel } from '../components/Carousel/Carousel';
 import { CarouselItem } from '../components/Carousel/CarouselItem';
 import { CarouselItemProps } from '../types/Props';
@@ -39,6 +38,12 @@ const StyledInfoDiv = styled.div`
   align-items: center;
 `;
 
+const StyledTitle = styled.h5`
+  color: #434ea0;
+  font-weight: 700;
+  font-size: 1.5em;
+`;
+
 const Index = () => {
   return (
     <>
@@ -50,17 +55,17 @@ const Index = () => {
 
       <StyledInfo>
         <StyledInfoDiv>
-          <h5>Contacte</h5>
+          <StyledTitle>CONTACTE</StyledTitle>
           <p>info@padelindoorrubi.com</p>
           <p>935 873 474 / 637 540 424 / 640 669 390(Cafeteria)</p>
         </StyledInfoDiv>
         <StyledInfoDiv>
-          <h5>Horaris</h5>
+          <StyledTitle>HORARIS</StyledTitle>
           <p><b>De dilluns a divendres:</b> 8h a 24:00h</p>
           <p><b>Caps de setmana i festius:</b> 8h a 21:30h</p>
         </StyledInfoDiv>
         <StyledInfoDiv>
-          <h5>Ens trobem a:</h5>
+          <StyledTitle>REDS SOCIALS</StyledTitle>
           <p>facebook</p>
           <p>instagram</p>
         </StyledInfoDiv>

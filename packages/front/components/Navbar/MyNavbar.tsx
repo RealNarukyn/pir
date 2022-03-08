@@ -17,13 +17,13 @@ export const MyNavbar = () => {
     >
       <div className="container-fluid">
 
-        <Link href="/">
+        <a href="/">
           <Image
             src={logo}
             alt="padel-indoor-rubi-logo"
             width={255} height={90}
           />
-        </Link>
+        </a>
 
         <button className="navbar-toggler" type="button"
           data-bs-toggle="collapse" data-bs-target="#navbarText"
@@ -61,7 +61,7 @@ export const MyNavbar = () => {
                 aria-labelledby="navbarScrollingDropdown"
               >
                 <NavDropDownItem href="/#5" title="Activitats" />
-                <NavDropDownItem href="/#6" title="Cerca companys!" />
+                <NavDropDownItem href="/openGames" title="Cerca companys!" />
               </ul>
             </li>
 
