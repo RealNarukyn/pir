@@ -22,4 +22,9 @@ export interface CardOpenGameProps {
     stillJoinable: boolean;
     minSkill: string;
     maxSkill: string;
+    trackInfo: {
+        _id: string;
+        trackNum: number
+        trackType: string;
+    }
 }

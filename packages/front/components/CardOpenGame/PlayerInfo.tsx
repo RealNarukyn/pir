@@ -6,11 +6,19 @@ import { Loading } from '../Loading';
 import { UserAPI } from '../../types/types';
 
 const PlayerContainer = styled.div`
-    width: 25%;
-    height: 25%;
+    margin: 0.5em;
+    padding: 1em;
 
-    border-radius = 1999px;
+    border-radius: 1999px;
     border: 1px solid black;
+
+    width: 4em;
+    height: 4em;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 `;
 
 export const PlayerInfo:React.FC<{ id:string }> = ({ id }) => {
@@ -18,17 +26,21 @@ export const PlayerInfo:React.FC<{ id:string }> = ({ id }) => {
   const [playerData, setPlayerData] = useState({} as UserAPI);
 
   useEffect(() => {
-    getUserInfo(id).then((data) => {
-      setPlayerData(data);
+    if (!id) {
       setLoading(false);
-    });
-  }, [loading]);
+      return;
+    }
 
-  if (loading) return <Loading />;
+    setLoading(false);
+    // getUserInfo(id).then((data) => {
+    //   setPlayerData(data);
+    //   setLoading(false);
+    // });
+  }, [loading]);
 
   return (
     <PlayerContainer>
-        hey
+      <span>user:{id}</span>
     </PlayerContainer>
   );
 };

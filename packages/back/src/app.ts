@@ -19,14 +19,8 @@ export const App = async (server: FastifyApp) => {
   server.register(formBodyPlugin);
 
   // -- Auth0 Verify
+  console.log(config.AUTH0);
   await server.register(fastifyAuth0Verify, config.AUTH0);
-  // Verify from AUTH0 with BFF ( Backend From Frontend )
-  server.get('/verify', {
-    handler(request, reply) {
-      reply.send(request.user);
-    },
-    preValidation: server.authenticate,
-  });
 
   // Swagger Options
   server.register(fastifySwagger, config.SWAGGER);

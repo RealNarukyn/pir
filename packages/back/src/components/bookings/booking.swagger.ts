@@ -32,6 +32,32 @@ const bookingSchemaResponse = {
   maxSkill: { type: 'string' }
 };
 
+const openGameSchemaResponse = {
+  _id: { type: 'string' },
+  trackID: { type: 'string' },
+  userID: { type: 'string' },
+  bName: { type: 'string' },
+  bEmail: { type: 'string' },
+  bDate: { type: 'string' },
+  initTime: { type: 'string' },
+  endTime: { type: 'string' },
+  duration: { type: 'number' },
+  openGame: { type: 'boolean' },
+  host: { type: 'string' },
+  players: { type: 'array', items: { type: 'string' } },
+  stillJoinable: { type: 'boolean' },
+  minSkill: { type: 'string' },
+  maxSkill: { type: 'string' },
+  trackInfo: {
+    type: 'object',
+    properties: {
+      '_id': { type: 'string' },
+      'trackNum': { type: 'number' },
+      'trackType': { type: 'string' }
+    }
+  }
+};
+
 export const SMain = {
   schema: {
     description:
@@ -100,7 +126,7 @@ export const SOpenBooks = {
         type: 'array',
         items: {
           type: 'object',
-          properties: bookingSchemaResponse
+          properties: openGameSchemaResponse
         }
       }
     }
@@ -167,6 +193,7 @@ export const SJoinGame = {
       properties: {
         bookID: { type: 'string', description: '_id of the open game you want to join' },
       }
+
     },
     response: {
       '500': {
@@ -178,9 +205,11 @@ export const SJoinGame = {
         }
       },
       '200': {
-        description: `It'll return the updated game`,
+        description: `It'll return an ok message`,
         type: 'object',
-        properties: bookingSchemaResponse
+        properties: {
+          message: { type: 'string' }
+        }
       }
     }
   }

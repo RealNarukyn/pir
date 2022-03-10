@@ -5,11 +5,10 @@ export default withApiAuthRequired(async (req, res) => {
   // If your Access Token is expired and you have a Refresh Token
   // `getAccessToken` will fetch you a new one using the `refresh_token` grant
   const { accessToken } = await getAccessToken(req, res);
-  console.log('accessToken', accessToken);
-  console.log('client', apiClient.defaults.baseURL);
-  console.log('request is:', req.body);
+  //   console.log('accessToken', accessToken);
 
-  const resAPI = await apiClient.get('/tracks', {
+  const { bookID } = req.body;
+  const resAPI = await apiClient.put(`/bookings/joinGame/${bookID}`, {}, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

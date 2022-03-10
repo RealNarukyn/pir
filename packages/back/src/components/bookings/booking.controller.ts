@@ -4,11 +4,13 @@ import { BookingModel, IBooking } from './booking.model';
 import { sumTime } from '../../utils/utils';
 import {
   validDate, validDuration, validEmail,
-  isFreeToBook, validTime, BookTimeInfo, hasUser
+  isFreeToBook, validTime, hasUser,
 } from '../../utils/validators';
 import {
-  BookingRequest, MainRequest, JoinGameRequest } from '../../types/booking';
+  BookingRequest, MainRequest, JoinGameRequest, BookTimeInfo
+} from '../../types/booking';
 import { SkillEnum } from '../../types/enums';
+import { TrackModel } from '../tracks/track.model';
 
 
 export class BookingController {
@@ -137,7 +139,24 @@ export class BookingController {
       return reply.code(500).send({ error: 'Invalid bDate' });
     }
 
-    return await BookingModel.find({ bDate: pDate, openGame: true }).lean();
+    // Get all bookings
+    const bookings = await BookingModel.find({
+      bDate: pDate, openGame: true
+    }).lean();
+
+    // Get the respective track info to every booking
+    const tracksInfo = await Promise.all(
+        bookings.map(async (book) => {
+          return await TrackModel.findById(book.trackID);
+        })
+    );
+
+    // Assign the track info to a new object
+    return bookings.map((book, index) => {
+      const info:any = book;
+      info.trackInfo = tracksInfo[index];
+      return info;
+    });
   };
 
   static joinGame = async (req: JoinGameRequest, reply: FastifyReply) => {
@@ -160,6 +179,11 @@ export class BookingController {
         throw new Error('The game isn\'t joinable anymore');
       }
 
+      if (booking.players.includes(user.sub)) {
+        throw new Error('You\'re already in the game...');
+      }
+      console.log('cutting here?');
+
       // @TODO: CHECKEAR QUE UN USUARIO CON LVL NOOB
       // NO SE PUEDA UNIR A UN GAME DE LVL AMATEUR O PRO
 
@@ -174,16 +198,17 @@ export class BookingController {
 
       // Update players
       if (numPlayers < 3) {
-        return await BookingModel.findOneAndUpdate(
+        await BookingModel.findOneAndUpdate(
             { _id: bookID },
             { players: [...booking.players, user.sub] },
             { new: true }
         );
+        return reply.code(200).send({ message: 'Updated succesfully' });
       }
 
       // Update players && joinable option
       if (numPlayers === 3) {
-        return await BookingModel.findOneAndUpdate(
+        await BookingModel.findOneAndUpdate(
             { _id: bookID },
             {
               players: [...booking.players, user.sub],
@@ -191,9 +216,10 @@ export class BookingController {
             },
             { new: true }
         );
+        return reply.code(200).send({ message: 'Updated succesfully' });
       }
     } catch (error) {
-      return reply.code(500).send({ error });
+      return reply.code(418).send({ error });
     }
   };
 };

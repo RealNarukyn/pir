@@ -12,5 +12,5 @@ export const bookingsRouter: FastifyPluginAsync =
 
       server.post('/:bDate', SBooking, BookingController.booking);
 
-      server.put('/joinGame', SJoinGame, BookingController.joinGame);
+      server.put('/joinGame/:bookID', SJoinGame, BookingController.joinGame);
     };

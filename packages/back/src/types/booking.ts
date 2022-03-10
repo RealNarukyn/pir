@@ -19,5 +19,11 @@ export type BookingRequest = FastifyRequest<{
 }>
 
 export type JoinGameRequest = FastifyRequest<{
-  Params: { bookID: string; }
+  Params: { bookID: string }
 }>
+
+export interface BookTimeInfo {
+  bDate: string;
+  initTime: string;
+  endTime: string;
+}

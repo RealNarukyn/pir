@@ -2,6 +2,7 @@ import { timeRegex, dateRegex, emailRegex } from './regex';
 import { addDays, getToday, splitTime, sumTime } from './utils';
 import { IBooking } from '../components/bookings/booking.model';
 import { FastifyRequest } from 'fastify';
+import { BookTimeInfo } from '../types/booking';
 
 export const checkEnv = (envVar:string):string => {
   if (process.env[envVar]) return process.env[envVar] as string;
@@ -57,12 +58,6 @@ export const validDuration = (duration: number): boolean =>
 
 export const validEmail = (email: string):boolean => emailRegex.test(email);
 
-export interface BookTimeInfo {
-  bDate: string;
-  initTime: string;
-  endTime: string;
-}
-
 export const isFreeToBook = (
     newBook:BookTimeInfo, bookings: IBooking[]
 ):boolean => {
@@ -99,6 +94,7 @@ export const hasUser = async (
     const user = await req.jwtVerify<{ sub: string }>();
     return user;
   } catch (error) {
+    console.log('error at hasUser:', error);
     return null;
   }
 };
