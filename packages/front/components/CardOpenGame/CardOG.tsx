@@ -15,6 +15,9 @@ const CardContainer = styled.div`
     padding: 2em;
     box-shadow: 0px 0px 5px 2px #e2f12f;
 
+    width: 22em;
+    height: 20em;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -80,12 +83,10 @@ export const CardOG:React.FC<{book: CardOpenGameProps}> = ({ book }) => {
       <BottomSection>
         {book.trackInfo.trackType === 'padel solo' ?
           _.range(0, 2).map((e) =>
-            // <PlayerInfo key={e} id={book.players[e] || ''} />) :
-            <PlayerInfo key={e} id={e.toString()} />) :
+            <PlayerInfo key={e} e={e} id={book.players[e] || ''} />) :
 
             _.range(0, 4).map((e) =>
-              // <PlayerInfo key={e} id={book.players[e] || ''} />)
-              <PlayerInfo key={e} id={e.toString()} />)
+              <PlayerInfo key={e} e={e} id={book.players[e] || ''} />)
         }
       </BottomSection>
 

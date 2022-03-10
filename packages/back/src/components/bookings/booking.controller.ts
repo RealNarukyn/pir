@@ -111,7 +111,7 @@ export class BookingController {
       const players = [host];
 
       // [ Create OPEN Booking ]
-      return await BookingModel.create({
+      const book = await BookingModel.create({
         trackID,
         userID: userID,
         bName,
@@ -126,6 +126,9 @@ export class BookingController {
         minSkill,
         maxSkill
       });
+      if (!book) throw new Error('Error creating the booking');
+
+      return reply.code(201).send({ message: 'Booking correctly created!'});
     } catch (error) {
       return reply.code(500).send({ error });
     }
@@ -182,7 +185,6 @@ export class BookingController {
       if (booking.players.includes(user.sub)) {
         throw new Error('You\'re already in the game...');
       }
-      console.log('cutting here?');
 
       // @TODO: CHECKEAR QUE UN USUARIO CON LVL NOOB
       // NO SE PUEDA UNIR A UN GAME DE LVL AMATEUR O PRO
@@ -218,8 +220,8 @@ export class BookingController {
         );
         return reply.code(200).send({ message: 'Updated succesfully' });
       }
-    } catch (error) {
-      return reply.code(418).send({ error });
+    } catch (error: any) {
+      return reply.code(418).send({ error: error.message });
     }
   };
 };

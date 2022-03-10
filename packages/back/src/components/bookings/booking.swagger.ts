@@ -170,15 +170,12 @@ export const SBooking = {
           error: { type: 'string' },
         }
       },
-      '200': {
-        description: `It'll return the created game. In case it's a **CLOSED** Game the properties: 
-        - host
-        - players
-        - minSkill
-        - maxSkill
-        will be null or invalid`,
+      '201': {
+        description: `It'll return a message saying correctly created`,
         type: 'object',
-        properties: bookingSchemaResponse
+        properties: {
+          message: { type: 'string' }
+        }
       }
     }
   }

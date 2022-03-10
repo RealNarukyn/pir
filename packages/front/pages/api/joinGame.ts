@@ -8,10 +8,16 @@ export default withApiAuthRequired(async (req, res) => {
   //   console.log('accessToken', accessToken);
 
   const { bookID } = req.body;
-  const resAPI = await apiClient.put(`/bookings/joinGame/${bookID}`, {}, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-  res.status(resAPI.status).json(resAPI.data);
+  try {
+    const resAPI = await apiClient.put(`/bookings/joinGame/${bookID}`, {}, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    res.status(resAPI.status).json(resAPI.data);
+  } catch (error) {
+    res.status(error.response.status)
+        .json({ error: error.response.data.error });
+  }
 });

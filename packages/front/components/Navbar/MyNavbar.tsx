@@ -36,13 +36,13 @@ export const MyNavbar = () => {
 
           <ul className="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
             <li className="nav-item">
+              <MyNavLink href="/" title="Inici" />
+            </li>
+            <li className="nav-item">
               <MyNavLink href="/#2" title="Noticies" />
             </li>
             <li className="nav-item">
               <MyNavLink href="/#3" title="Campionats" />
-            </li>
-            <li className="nav-item">
-              <MyNavLink active href="/" title="Inici" />
             </li>
             <li className="nav-item">
               <MyNavLink href="/bookings" title="Reserves" />

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import CircularProgress from '@mui/material/CircularProgress';
+
 import { getUserInfo } from '../../lib/fetcher';
 import { Loading } from '../Loading';
 import { UserAPI } from '../../types/types';
@@ -19,9 +21,11 @@ const PlayerContainer = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
+
+    background: ${(props) => props.theme.hasPlayer? '#e2f12fc2': '#ef3131c9'}
 `;
 
-export const PlayerInfo:React.FC<{ id:string }> = ({ id }) => {
+export const PlayerInfo:React.FC<{ id:string; e: number }> = ({ id, e }) => {
   const [loading, setLoading] = useState(true);
   const [playerData, setPlayerData] = useState({} as UserAPI);
 
@@ -38,9 +42,11 @@ export const PlayerInfo:React.FC<{ id:string }> = ({ id }) => {
     // });
   }, [loading]);
 
+  if (loading) return <CircularProgress sx={{ margin: '1em' }}/>;
+
   return (
-    <PlayerContainer>
-      <span>user:{id}</span>
+    <PlayerContainer theme={id? { hasPlayer: true}: { hasPlayer: false}}>
+      <span>user:{e+1}</span>
     </PlayerContainer>
   );
 };
