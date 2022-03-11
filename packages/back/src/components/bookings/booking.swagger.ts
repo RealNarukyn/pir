@@ -29,7 +29,15 @@ const bookingSchemaResponse = {
   players: { type: 'array', items: { type: 'string' } },
   stillJoinable: { type: 'boolean' },
   minSkill: { type: 'string' },
-  maxSkill: { type: 'string' }
+  maxSkill: { type: 'string' },
+  trackInfo: {
+    type: 'object',
+    properties: {
+      '_id': { type: 'string' },
+      'trackNum': { type: 'number' },
+      'trackType': { type: 'string' }
+    }
+  }
 };
 
 const openGameSchemaResponse = {

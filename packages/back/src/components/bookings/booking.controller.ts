@@ -12,6 +12,13 @@ import {
 import { SkillEnum } from '../../types/enums';
 import { TrackModel } from '../tracks/track.model';
 
+const getTracksInfo = async (bookings: any[])=> {
+  return await Promise.all(
+      bookings.map(async (book) => {
+        return await TrackModel.findById(book.trackID);
+      })
+  );
+};
 
 export class BookingController {
   static main = async (req: MainRequest, reply: FastifyReply) => {
@@ -22,7 +29,16 @@ export class BookingController {
       return reply.code(500).send({ error: 'Invalid bDate' });
     }
 
-    return await BookingModel.find({ bDate: pDate }).lean();
+    const bookings = await BookingModel.find({ bDate: pDate }).lean();
+
+    const tracks = await getTracksInfo(bookings);
+
+    // Assign the track info to a new object
+    return bookings.map((book, index) => {
+      const info:any = book;
+      info.trackInfo = tracks[index];
+      return info;
+    });
   };
 
   static booking = async (req: BookingRequest, reply: FastifyReply) => {
@@ -148,11 +164,7 @@ export class BookingController {
     }).lean();
 
     // Get the respective track info to every booking
-    const tracksInfo = await Promise.all(
-        bookings.map(async (book) => {
-          return await TrackModel.findById(book.trackID);
-        })
-    );
+    const tracksInfo = await getTracksInfo(bookings);
 
     // Assign the track info to a new object
     return bookings.map((book, index) => {
